@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">EaseMusic</string>
+
+    <string name="there_has_nothing">这里什么都没有哦~</string>
+    <string name="is_loading">正在努力加载中…</string>
+    <string name="have_problem">哇哦，好像出现了什么问题</string>
+</resources>
