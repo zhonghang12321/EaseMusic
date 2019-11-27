@@ -1,6 +1,8 @@
 package me.sofiworker.easemusic;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.Context;
 import android.os.Handler;
 
 /**
@@ -12,14 +14,21 @@ import android.os.Handler;
 public class App extends Application {
 
     private static Handler sHandler;
+    @SuppressLint("StaticFieldLeak")
+    private static Context sContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
         sHandler = new Handler();
+        sContext = getApplicationContext();
     }
 
-    public static Handler getsHandler() {
+    public static Handler getHandler() {
         return sHandler;
+    }
+
+    public static Context getContext(){
+        return sContext;
     }
 }

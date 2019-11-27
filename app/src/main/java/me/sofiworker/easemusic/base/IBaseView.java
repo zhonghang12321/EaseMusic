@@ -7,4 +7,6 @@ package me.sofiworker.easemusic.base;
  * @description view接口
  */
 public interface IBaseView {
+
+
 }
