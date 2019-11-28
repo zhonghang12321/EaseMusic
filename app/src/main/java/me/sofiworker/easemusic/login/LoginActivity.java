@@ -1,7 +1,5 @@
 package me.sofiworker.easemusic.login;
 
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -11,7 +9,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 import me.sofiworker.easemusic.R;
-import me.sofiworker.easemusic.R2;
 import me.sofiworker.easemusic.base.BaseActivity;
 import me.sofiworker.easemusic.util.StrUtil;
 
@@ -21,7 +18,7 @@ import me.sofiworker.easemusic.util.StrUtil;
  * @date 2019/11/27 20:27
  * @description 登录活动
  */
-public class LoginActivity extends BaseActivity<LoginContract.Presenter> implements LoginContract.View {
+public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
 
     private static final String TAG = "LoginActivity";
 
@@ -40,26 +37,18 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     @Override
     protected void initEvent() {
         mPresenter = new LoginPresenter();
-//        mLoginBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                clickEvent();
-//            }
-//        });
+        mPresenter.attachView(this, mProvider);
     }
 
     @OnClick(R.id.btn_login)
     void clickEvent(){
-        if (!StrUtil.isBlank(mUserNameEt.getText().toString(), mPasswordEt.getText().toString())){
+        if (!StrUtil.isBlank(mUserNameEt.getText().toString()) && !StrUtil.isBlank(mPasswordEt.getText().toString())){
             Map<String, String> userInfo = new HashMap<>(16);
             userInfo.put("phone", mUserNameEt.getText().toString());
             userInfo.put("password", mPasswordEt.getText().toString());
             mPresenter.postLoginInfo(userInfo);
+        }else {
+            showToast("请输入正确的账号/密码");
         }
-    }
-
-    @Override
-    public void showResult() {
-
     }
 }

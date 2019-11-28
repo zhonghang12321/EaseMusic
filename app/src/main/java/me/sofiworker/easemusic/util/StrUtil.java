@@ -8,7 +8,11 @@ package me.sofiworker.easemusic.util;
  */
 public class StrUtil {
 
-    public static boolean isBlank(String ...str){
-        return str == null || str.length == 0 || (str.length == 1 && "".equals(str[0]));
+    public static boolean isBlank(String str){
+        if (str == null) {
+            return true;
+        }else {
+            return "".equals(str);
+        }
     }
 }

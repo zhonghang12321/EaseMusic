@@ -4,6 +4,7 @@ import me.sofiworker.easemusic.Api;
 import me.sofiworker.easemusic.Constants;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * @author sofiworker
@@ -13,26 +14,11 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
  */
 public class RetrofitUtil {
 
-    private static Retrofit sRetrofit;
-    private static Api sApi;
-
-    private static void createRetrofit(){
-        sRetrofit = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-    }
-
     public static Api getApiService(){
-        if (sRetrofit == null){
-            createRetrofit();
-        }else {
-            if (sApi == null) {
-                sApi = sRetrofit.create(Api.class);
-            }else {
-                return sApi;
-            }
-        }
-        return null;
+        return new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build().create(Api.class);
     }
 }

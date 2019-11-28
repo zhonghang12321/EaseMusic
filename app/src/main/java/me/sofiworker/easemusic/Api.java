@@ -3,7 +3,7 @@ package me.sofiworker.easemusic;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import me.sofiworker.easemusic.model.User;
+import me.sofiworker.easemusic.bean.UserBean;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 
@@ -16,5 +16,5 @@ import retrofit2.http.QueryMap;
 public interface Api {
 
     @POST("login/cellphone")
-    Observable<User> userLogin(@QueryMap Map<String, String> userInfo);
+    Observable<UserBean> userLogin(@QueryMap Map<String, String> userInfo);
 }

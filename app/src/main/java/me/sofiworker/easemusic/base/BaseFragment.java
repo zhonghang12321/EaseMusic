@@ -1,6 +1,7 @@
 package me.sofiworker.easemusic.base;
 
 import android.app.ProgressDialog;
+import android.arch.lifecycle.Lifecycle;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,9 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import me.sofiworker.easemusic.App;
+import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
+import com.trello.rxlifecycle2.LifecycleProvider;
+import com.trello.rxlifecycle2.components.support.RxFragment;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import me.sofiworker.easemusic.R;
 import me.sofiworker.easemusic.UILoader;
+import me.sofiworker.easemusic.util.DialogUtil;
+import me.sofiworker.easemusic.util.ToastUtil;
 
 /**
  * @author sofiworker
@@ -20,12 +28,12 @@ import me.sofiworker.easemusic.UILoader;
  * @date 2019/11/25 20:40
  * @description fragment基类
  */
-public abstract class BaseFragment extends Fragment implements IBaseView{
+public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements IBaseView{
 
     private UILoader mUiLoader;
-    private ProgressDialog mProgressDialog;
-    private Toast mToast;
-    protected IBasePresenter mPresenter;
+    private Unbinder mBind;
+    protected final LifecycleProvider<Lifecycle.Event> mProvider
+            = AndroidLifecycle.createLifecycleProvider(this);
 
     @Nullable
     @Override
@@ -44,44 +52,46 @@ public abstract class BaseFragment extends Fragment implements IBaseView{
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        mBind = ButterKnife.bind(this, view);
         initEvent();
+    }
+
+    @Override
+    public void onDetach() {
+        if (mBind != null){
+            mBind.unbind();
+        }
+        super.onDetach();
     }
 
     abstract int getLayoutId();
 
     protected abstract void initEvent();
 
-    protected void showLoading(String msg){
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(getContext());
-        }
-        mProgressDialog.setTitle(getString(R.string.prompt));
-        mProgressDialog.setMessage(msg);
-        mProgressDialog.show();
+    @Override
+    public void showLoading(String msg){
+        DialogUtil.showProgressDialog(getContext(), msg);
     }
 
-    protected void dismissLoading(){
-        if (mProgressDialog.isShowing()){
-            mProgressDialog.dismiss();
-        }
+    @Override
+    public void dismissLoading(){
+        DialogUtil.dismissProgressDialog();
     }
 
-    protected void showToast(String msg){
-        if (mToast == null) {
-            mToast = new Toast(getContext());
-        }
-        mToast.setText(msg);
-        mToast.setDuration(Toast.LENGTH_SHORT);
-        mToast.show();
+    @Override
+    public void showToast(String msg){
+        ToastUtil.showShort(msg);
     }
 
-    protected void showNoNetwork(){
+    @Override
+    public void showNoNetwork(){
         if (mUiLoader != null) {
             mUiLoader.updateStatus(UILoader.UIStatus.NETWORK_ERROR);
         }
     }
 
-    protected void showEmpty(){
+    @Override
+    public void showEmpty(){
         if (mUiLoader != null) {
             mUiLoader.updateStatus(UILoader.UIStatus.EMPTY);
         }

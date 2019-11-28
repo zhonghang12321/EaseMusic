@@ -15,10 +15,9 @@ public interface LoginContract {
 
     interface View extends IBaseView {
 
-        void showResult();
     }
 
-    interface Presenter extends IBasePresenter {
+    interface Presenter extends IBasePresenter<View> {
 
         void postLoginInfo(Map<String, String> userInfo);
     }

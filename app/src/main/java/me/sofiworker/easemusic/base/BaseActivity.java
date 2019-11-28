@@ -1,18 +1,21 @@
 package me.sofiworker.easemusic.base;
 
-import android.app.ProgressDialog;
+import android.arch.lifecycle.Lifecycle;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
+import com.trello.rxlifecycle2.LifecycleProvider;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import me.sofiworker.easemusic.R;
 import me.sofiworker.easemusic.UILoader;
+import me.sofiworker.easemusic.util.DialogUtil;
+import me.sofiworker.easemusic.util.ToastUtil;
 
 /**
  * @author sofiworker
@@ -20,13 +23,14 @@ import me.sofiworker.easemusic.UILoader;
  * @date 2019/11/25 20:37
  * @description 活动基类
  */
-public abstract class BaseActivity<T> extends AppCompatActivity implements IBaseView{
+public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity
+        implements IBaseView{
 
     private UILoader mUiLoader;
-    private ProgressDialog mProgressDialog;
-    private Toast mToast;
     protected T mPresenter;
     private Unbinder mBind;
+    protected final LifecycleProvider<Lifecycle.Event> mProvider
+            = AndroidLifecycle.createLifecycleProvider(this);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,39 +57,35 @@ public abstract class BaseActivity<T> extends AppCompatActivity implements IBase
      */
     protected abstract int getLayoutId();
 
+    /**
+     * 初始化函数
+     */
     protected abstract void initEvent();
 
-    protected void showLoading(String msg){
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-        }
-        mProgressDialog.setTitle(getString(R.string.prompt));
-        mProgressDialog.setMessage(msg);
-        mProgressDialog.show();
+    @Override
+    public void showLoading(String msg){
+        DialogUtil.showProgressDialog(this, msg);
     }
 
-    protected void dismissLoading(){
-        if (mProgressDialog.isShowing()){
-            mProgressDialog.dismiss();
-        }
+    @Override
+    public void dismissLoading(){
+        DialogUtil.dismissProgressDialog();
     }
 
-    protected void showToast(String msg){
-        if (mToast == null) {
-            mToast = new Toast(this);
-        }
-        mToast.setText(msg);
-        mToast.setDuration(Toast.LENGTH_SHORT);
-        mToast.show();
+    @Override
+    public void showToast(String msg){
+        ToastUtil.showShort(msg);
     }
 
-    protected void showNoNetwork(){
+    @Override
+    public void showNoNetwork(){
         if (mUiLoader != null) {
             mUiLoader.updateStatus(UILoader.UIStatus.NETWORK_ERROR);
         }
     }
 
-    protected void showEmpty(){
+    @Override
+    public void showEmpty(){
         if (mUiLoader != null) {
             mUiLoader.updateStatus(UILoader.UIStatus.EMPTY);
         }
@@ -95,6 +95,9 @@ public abstract class BaseActivity<T> extends AppCompatActivity implements IBase
     protected void onDestroy() {
         if (mBind != null){
             mBind.unbind();
+        }
+        if (mPresenter != null) {
+            mPresenter.detachView();
         }
         super.onDestroy();
     }

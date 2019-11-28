@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
+import me.sofiworker.easemusic.util.SpUtil;
+
 /**
  * @author sofiworker
  * @version 1.0.0

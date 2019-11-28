@@ -1,5 +1,6 @@
-package me.sofiworker.easemusic;
+package me.sofiworker.easemusic.main;
 
+import me.sofiworker.easemusic.R;
 import me.sofiworker.easemusic.base.BaseActivity;
 
 /**
