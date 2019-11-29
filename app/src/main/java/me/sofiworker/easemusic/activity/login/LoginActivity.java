@@ -1,4 +1,4 @@
-package me.sofiworker.easemusic.login;
+package me.sofiworker.easemusic.activity.login;
 
 import android.widget.Button;
 import android.widget.EditText;

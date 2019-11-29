@@ -11,5 +11,9 @@ import android.content.SharedPreferences;
  */
 public class SpUtil {
 
-    private static SharedPreferences sPreferences;
+
+    public static String getStr(Context context, String spName, String spKey){
+        SharedPreferences sp = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
+        return sp.getString(spKey, "");
+    }
 }

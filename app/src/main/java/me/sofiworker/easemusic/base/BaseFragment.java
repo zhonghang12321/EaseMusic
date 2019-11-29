@@ -32,6 +32,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
 
     private UILoader mUiLoader;
     private Unbinder mBind;
+    protected T mPresenter;
     protected final LifecycleProvider<Lifecycle.Event> mProvider
             = AndroidLifecycle.createLifecycleProvider(this);
 
@@ -64,7 +65,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         super.onDetach();
     }
 
-    abstract int getLayoutId();
+    protected abstract int getLayoutId();
 
     protected abstract void initEvent();
 

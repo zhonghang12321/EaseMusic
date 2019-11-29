@@ -1,4 +1,4 @@
-package me.sofiworker.easemusic.main;
+package me.sofiworker.easemusic.activity.main;
 
 import me.sofiworker.easemusic.base.IBasePresenter;
 import me.sofiworker.easemusic.base.IBaseView;
@@ -12,10 +12,10 @@ import me.sofiworker.easemusic.base.IBaseView;
 public interface MainContract {
 
     interface View extends IBaseView{
-
+        void showNavProfile(String nickName, String headImgUrl);
     }
 
     interface Presenter extends IBasePresenter<View> {
-
+        void loadProfile();
     }
 }

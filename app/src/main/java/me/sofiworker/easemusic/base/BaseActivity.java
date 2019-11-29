@@ -46,9 +46,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         }
         mUiLoader.updateStatus(UILoader.UIStatus.SUCCESS);
         setContentView(mUiLoader);
+        mBind = ButterKnife.bind(this);
 
         initEvent();
-        mBind = ButterKnife.bind(this);
     }
 
     /**
