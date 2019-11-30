@@ -17,6 +17,7 @@ public class ToastUtil {
     public static void showShort(String msg){
         if (sToast == null) {
             sToast = Toast.makeText(App.getContext(), msg, Toast.LENGTH_SHORT);
+            sToast.show();
         }
         sToast.setText(msg);
         sToast.show();

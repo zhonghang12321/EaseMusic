@@ -13,7 +13,7 @@ import com.trello.rxlifecycle2.LifecycleProvider;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import me.sofiworker.easemusic.UILoader;
+import me.sofiworker.easemusic.UiLoader;
 import me.sofiworker.easemusic.util.DialogUtil;
 import me.sofiworker.easemusic.util.ToastUtil;
 
@@ -26,7 +26,7 @@ import me.sofiworker.easemusic.util.ToastUtil;
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity
         implements IBaseView{
 
-    private UILoader mUiLoader;
+    private UiLoader mUiLoader;
     protected T mPresenter;
     private Unbinder mBind;
     protected final LifecycleProvider<Lifecycle.Event> mProvider
@@ -37,14 +37,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         super.onCreate(savedInstanceState);
 
         if (mUiLoader == null){
-            mUiLoader = new UILoader(this) {
+            mUiLoader = new UiLoader(this) {
                 @Override
                 protected View getSuccessView(ViewGroup container) {
                     return LayoutInflater.from(getContext()).inflate(getLayoutId(), container, false);
                 }
             };
         }
-        mUiLoader.updateStatus(UILoader.UIStatus.SUCCESS);
+        mUiLoader.updateStatus(UiLoader.UiStatus.SUCCESS);
         setContentView(mUiLoader);
         mBind = ButterKnife.bind(this);
 
@@ -80,14 +80,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     public void showNoNetwork(){
         if (mUiLoader != null) {
-            mUiLoader.updateStatus(UILoader.UIStatus.NETWORK_ERROR);
+            mUiLoader.updateStatus(UiLoader.UiStatus.NETWORK_ERROR);
         }
     }
 
     @Override
     public void showEmpty(){
         if (mUiLoader != null) {
-            mUiLoader.updateStatus(UILoader.UIStatus.EMPTY);
+            mUiLoader.updateStatus(UiLoader.UiStatus.EMPTY);
         }
     }
 

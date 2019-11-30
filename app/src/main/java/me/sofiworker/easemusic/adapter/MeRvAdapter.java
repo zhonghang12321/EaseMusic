@@ -1,14 +1,22 @@
 package me.sofiworker.easemusic.adapter;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 import me.sofiworker.easemusic.R;
+import me.sofiworker.easemusic.bean.PlaylistBean;
+import me.sofiworker.easemusic.bean.PlaylistTitleBean;
+
 
 /**
  * @author sofiworker
@@ -18,28 +26,40 @@ import me.sofiworker.easemusic.R;
  */
 public class MeRvAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, BaseViewHolder> {
 
-    static final int TYPE_LEVEL_0 = 0;
-    static final int TYPE_LEVEL_1 = 1;
-    static final int TYPE_LEVEL_2 = 2;
+    public static final int TYPE_LEVEL_1 = 1;
+    public static final int TYPE_LEVEL_2 = 2;
 
-    /**
-     * Same as QuickAdapter#QuickAdapter(Context,int) but with
-     * some initialization data.
-     *
-     * @param data A new list is created out of this one to avoid mutable list
-     */
     public MeRvAdapter(List<MultiItemEntity> data) {
         super(data);
-        addItemType(TYPE_LEVEL_1, R.layout.item_me_created_playlist);
-        addItemType(TYPE_LEVEL_2, R.layout.item_me_rv);
+        addItemType(TYPE_LEVEL_1, R.layout.item_me_rv_playlist_title);
+        addItemType(TYPE_LEVEL_2, R.layout.item_me_rv_playlist);
     }
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, MultiItemEntity item) {
         switch (helper.getItemViewType()){
             case TYPE_LEVEL_1:
+                int pos = helper.getAdapterPosition();
+                PlaylistTitleBean itemBean = (PlaylistTitleBean)item;
+                helper.setText(R.id.tv_playlist_title, itemBean.getTitle());
+                helper.setImageResource(R.id.iv_play_list_instruction_arrow, itemBean.isExpanded()? R.drawable.ic_down_arrow : R.drawable.ic_right_arrow);
+                helper.itemView.setOnClickListener(v -> {
+                    if (itemBean.isExpanded()) {
+                        collapse(pos);
+                    }else {
+                        expand(pos);
+                    }
+                });
                 break;
             case TYPE_LEVEL_2:
+                PlaylistBean bean = (PlaylistBean)item;
+                ImageView view = helper.getView(R.id.iv_playlist_cover);
+                // TODO: 2019/11/30 待判断该方法能否解决复用问题
+                view.setImageDrawable(null);
+                Glide.with(mContext).load(bean.getCoverImgUrl()).into(view);
+                helper.setText(R.id.tv_me_playlist_name, bean.getName());
+                helper.setText(R.id.tv_me_playlist_song_count, bean.getTrackCount() +mContext.getString(R.string.num));
+                helper.setText(R.id.tv_me_playlist_creator, bean.getCreator().getNickname());
                 break;
             default:
                 break;

@@ -1,7 +1,11 @@
 package me.sofiworker.easemusic.fragment.me;
 
+import java.util.List;
+
 import me.sofiworker.easemusic.base.IBasePresenter;
 import me.sofiworker.easemusic.base.IBaseView;
+import me.sofiworker.easemusic.bean.PlaylistBean;
+import me.sofiworker.easemusic.bean.SongListBean;
 
 /**
  * @author sofiworker
@@ -12,10 +16,18 @@ import me.sofiworker.easemusic.base.IBaseView;
 public interface MeContract {
 
     interface View extends IBaseView{
-
+        void transportSongList(List<PlaylistBean> songList);
     }
 
     interface Presenter extends IBasePresenter<View> {
+        void getPlayList();
+        String loginUserName();
+    }
 
+    interface Model {
+        int getUserUid();
+        void savePlayList(SongListBean songListBean);
+        String getUserName();
+        SongListBean getCacheList();
     }
 }

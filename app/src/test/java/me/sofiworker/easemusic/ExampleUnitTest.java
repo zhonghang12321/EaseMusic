@@ -1,5 +1,7 @@
 package me.sofiworker.easemusic;
 
+import android.text.TextUtils;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

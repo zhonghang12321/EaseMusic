@@ -1,49 +1,47 @@
 package me.sofiworker.easemusic;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-public abstract class UILoader extends FrameLayout {
+public abstract class UiLoader extends FrameLayout {
 
+    private static final String TAG = "UiLoader";
     private View mLoadingView;
     private View mSuccessView;
     private View mNoNetWorkView;
     private View mEmptyView;
 
 
-    public enum UIStatus {
+    public enum UiStatus {
         LOADING, SUCCESS, NETWORK_ERROR, EMPTY, NONE
     }
 
-    public UIStatus mCurrentStatus = UIStatus.NONE;
+    public UiStatus mCurrentStatus = UiStatus.NONE;
 
-    public UILoader(@NonNull Context context) {
+    public UiLoader(@NonNull Context context) {
         this(context, null);
     }
 
-    public UILoader(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public UiLoader(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, null, 0);
     }
 
-    public UILoader(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public UiLoader(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
-    public void updateStatus(UIStatus status){
+    public void updateStatus(UiStatus status){
         mCurrentStatus = status;
-        App.getHandler().post(new Runnable() {
-            @Override
-            public void run() {
-                switchUiByCurrentStatus();
-            }
-        });
+        App.getHandler().post(this::switchUiByCurrentStatus);
     }
 
     private void init() {
@@ -55,25 +53,25 @@ public abstract class UILoader extends FrameLayout {
             mLoadingView = getLoadingView();
             addView(mLoadingView);
         }
-        mLoadingView.setVisibility(mCurrentStatus == UIStatus.LOADING ? VISIBLE : GONE);
+        mLoadingView.setVisibility(mCurrentStatus == UiStatus.LOADING ? VISIBLE : GONE);
 
         if (mSuccessView == null) {
             mSuccessView = getSuccessView(this);
             addView(mSuccessView);
         }
-        mSuccessView.setVisibility(mCurrentStatus == UIStatus.SUCCESS ? VISIBLE : GONE);
+        mSuccessView.setVisibility(mCurrentStatus == UiStatus.SUCCESS ? VISIBLE : GONE);
 
         if (mNoNetWorkView == null) {
             mNoNetWorkView = getNoNetWorkView();
             addView(mNoNetWorkView);
         }
-        mNoNetWorkView.setVisibility(mCurrentStatus == UIStatus.NETWORK_ERROR ? VISIBLE : GONE);
+        mNoNetWorkView.setVisibility(mCurrentStatus == UiStatus.NETWORK_ERROR ? VISIBLE : GONE);
 
         if (mEmptyView == null) {
             mEmptyView = getEmptyView();
             addView(mEmptyView);
         }
-        mEmptyView.setVisibility(mCurrentStatus == UIStatus.EMPTY ? VISIBLE : GONE);
+        mEmptyView.setVisibility(mCurrentStatus == UiStatus.EMPTY ? VISIBLE : GONE);
     }
 
     private View getEmptyView() {

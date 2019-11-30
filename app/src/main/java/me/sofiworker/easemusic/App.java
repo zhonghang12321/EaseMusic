@@ -21,9 +21,9 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
-        super.onCreate();
         sHandler = new Handler();
         sContext = getApplicationContext();
+        super.onCreate();
     }
 
     public static Handler getHandler() {

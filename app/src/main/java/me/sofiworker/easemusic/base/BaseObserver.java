@@ -1,10 +1,16 @@
 package me.sofiworker.easemusic.base;
 
+import android.text.TextUtils;
+import android.util.Log;
+
+import org.json.JSONException;
+
 import io.reactivex.observers.ResourceObserver;
 import me.sofiworker.easemusic.App;
 import me.sofiworker.easemusic.R;
 import me.sofiworker.easemusic.util.DialogUtil;
 import me.sofiworker.easemusic.util.ToastUtil;
+import retrofit2.HttpException;
 
 /**
  * @author sofiworker
@@ -14,6 +20,7 @@ import me.sofiworker.easemusic.util.ToastUtil;
  */
 public abstract class BaseObserver<T> extends ResourceObserver<T> {
 
+    private static final String TAG = "BaseObserver";
 
     @Override
     protected void onStart() {
@@ -33,7 +40,14 @@ public abstract class BaseObserver<T> extends ResourceObserver<T> {
 
     @Override
     public void onError(Throwable e) {
-        ToastUtil.showShort(e.getMessage());
+        Log.d(TAG, "onError: "+e.getMessage());
+        ToastUtil.showShort("出现故障了"+e.getMessage());
+        if (e instanceof HttpException) {
+            ToastUtil.showShort(e.getMessage());
+        }else if (e instanceof JSONException){
+            ToastUtil.showShort("json解析异常"+e.getMessage());
+        }
+        DialogUtil.dismissProgressDialog();
         onFail(e);
     }
 
@@ -45,6 +59,6 @@ public abstract class BaseObserver<T> extends ResourceObserver<T> {
     protected abstract void onSuccess(T t);
 
     public void onFail(Throwable e){
-        DialogUtil.dismissProgressDialog();
+
     }
 }

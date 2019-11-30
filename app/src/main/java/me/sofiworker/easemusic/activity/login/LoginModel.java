@@ -22,7 +22,7 @@ class LoginModel {
     void saveLoginUserInfo(UserBean user){
         spSave("accountBean", "account", user.getAccount());
         spSave("profileBean", "profile", user.getProfile());
-        spSave("BindingBean", "bindings", user.getBindings());
+        spSave("bindingBean", "bindings", user.getBindings());
     }
 
     private void spSave(String spName, String spKey, Object o){

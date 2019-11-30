@@ -23,6 +23,14 @@
     <string name="my_radio">我的电台</string>
     <string name="my_collection">我的收藏</string>
 
+    <string-array name="playlist_title">
+        <item>创建的歌单</item>
+        <item>收藏的歌单</item>
+    </string-array>
+
     <string name="created_playlist">创建的歌单</string>
     <string name="collection_playlist">收藏的歌单</string>
+
+    <string name="by">by</string>
+    <string name="num">首</string>
 </resources>
