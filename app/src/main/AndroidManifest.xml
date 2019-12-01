@@ -20,6 +20,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.login.LoginActivity"/>
+        <activity android:name=".activity.localmusic.LocalMusicActivity"/>
+        <activity android:name=".activity.recentlyplay.RecentlyPlayActivity"/>
+        <activity android:name=".activity.downloadmanager.DownloadManagerActivity"/>
+        <activity android:name=".activity.myradio.MyRadioActivity"/>
+        <activity android:name=".activity.mycollection.MyCollectionActivity"/>
     </application>
 
 </manifest>

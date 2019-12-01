@@ -12,8 +12,9 @@ import me.sofiworker.easemusic.util.SpUtil;
  * @date 2019/11/29 20:24
  * @description 主活动的model层
  */
-public class MainModel {
+public class MainModel implements MainContract.Model {
 
+    @Override
     public ProfileBean getProfile(){
         String str = SpUtil.getStr(App.getContext(), "profileBean", "profile");
         if (!"".equals(str)) {

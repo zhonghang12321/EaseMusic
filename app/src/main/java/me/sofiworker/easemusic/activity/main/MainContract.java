@@ -2,6 +2,7 @@ package me.sofiworker.easemusic.activity.main;
 
 import me.sofiworker.easemusic.base.IBasePresenter;
 import me.sofiworker.easemusic.base.IBaseView;
+import me.sofiworker.easemusic.bean.ProfileBean;
 
 /**
  * @author sofiworker
@@ -17,5 +18,10 @@ public interface MainContract {
 
     interface Presenter extends IBasePresenter<View> {
         void loadProfile();
+        boolean isLogin();
+    }
+
+    interface Model {
+        ProfileBean getProfile();
     }
 }

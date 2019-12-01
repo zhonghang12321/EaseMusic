@@ -72,6 +72,7 @@
                 android:layout_height="80dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginStart="25dp"
+                android:background="@color/primary"
                 android:src="@drawable/ic_launcher_background"/>
 
             <LinearLayout
@@ -86,18 +87,22 @@
                     android:id="@+id/tv_nick_name"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/nick_name"
+                    android:text="@string/not_login"
                     android:gravity="center"/>
                 <TextView
+                    android:id="@+id/tv_main_lv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
+                    android:visibility="invisible"
                     android:text="@string/user_lv"/>
                 <TextView
+                    android:id="@+id/tv_main_sign"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:text="已签到"/>
+                    android:visibility="invisible"
+                    android:text="@string/not_sign"/>
             </LinearLayout>
 
 

@@ -1,5 +1,7 @@
 package me.sofiworker.easemusic.activity.login;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Map;
 
 import me.sofiworker.easemusic.base.BaseObserver;
@@ -20,7 +22,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
     private static final String TAG = "LoginPresenter";
     private LoginModel mModel;
 
-    public LoginPresenter(){
+    LoginPresenter(){
         mModel = new LoginModel();
     }
 
@@ -35,7 +37,9 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                         int successCode = 200;
                         if (userBean != null && userBean.getCode() == successCode) {
                             mModel.saveLoginUserInfo(userBean);
+                            mView.isLoginSuccess(true);
                         }else {
+                            mView.isLoginSuccess(false);
                             ToastUtil.showShort("登录失败！");
                         }
                     }

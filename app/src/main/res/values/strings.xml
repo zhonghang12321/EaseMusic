@@ -9,13 +9,16 @@
     <string name="login_password">密码</string>
     <string name="login">登录</string>
 
-    <string-array name="indicator_title">
+    <string-array name="main_mi_title">
         <item>我的</item>
         <item>发现</item>
     </string-array>
 
     <string name="nick_name">用户名/昵称</string>
     <string name="user_lv">等级</string>
+    <string name="not_login">未登录</string>
+    <string name="sign">已签到</string>
+    <string name="not_sign">签到</string>
 
     <string name="local_music">本地音乐</string>
     <string name="recently_play">最近播放</string>
@@ -33,4 +36,11 @@
 
     <string name="by">by</string>
     <string name="num">首</string>
+
+    <string-array name="local_music_mi_title">
+        <item>单曲</item>
+        <item>歌手</item>
+        <item>专辑</item>
+        <item>文件夹</item>
+    </string-array>
 </resources>

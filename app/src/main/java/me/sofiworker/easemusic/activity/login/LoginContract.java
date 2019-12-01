@@ -14,7 +14,7 @@ import me.sofiworker.easemusic.base.IBaseView;
 public interface LoginContract {
 
     interface View extends IBaseView {
-
+        void isLoginSuccess(boolean isTrue);
     }
 
     interface Presenter extends IBasePresenter<View> {

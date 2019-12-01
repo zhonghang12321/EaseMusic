@@ -1,10 +1,11 @@
 package me.sofiworker.easemusic.fragment.me;
 
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
@@ -13,10 +14,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import me.sofiworker.easemusic.R;
+import me.sofiworker.easemusic.activity.downloadmanager.DownloadManagerActivity;
+import me.sofiworker.easemusic.activity.mycollection.MyCollectionActivity;
+import me.sofiworker.easemusic.activity.myradio.MyRadioActivity;
+import me.sofiworker.easemusic.activity.recentlyplay.RecentlyPlayActivity;
 import me.sofiworker.easemusic.adapter.MeRvAdapter;
 import me.sofiworker.easemusic.base.BaseFragment;
 import me.sofiworker.easemusic.bean.PlaylistTitleBean;
 import me.sofiworker.easemusic.bean.PlaylistBean;
+import me.sofiworker.easemusic.activity.localmusic.LocalMusicActivity;
 
 /**
  * @author sofiworker
@@ -30,6 +36,20 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     @BindView(R.id.rv_me)
     RecyclerView mMeRv;
     private MeRvAdapter mAdapter;
+    private List<MultiItemEntity> titleList;
+
+    void onClickEvent(){
+        LinearLayout linearLayout = mAdapter.getHeaderLayout();
+        linearLayout.findViewById(R.id.rl_me_local_music).setOnClickListener(v -> jumpToActivity(LocalMusicActivity.class));
+        linearLayout.findViewById(R.id.rl_me_recently_play).setOnClickListener(v -> jumpToActivity(RecentlyPlayActivity.class));
+        linearLayout.findViewById(R.id.rl_me_download_manager).setOnClickListener(v -> jumpToActivity(DownloadManagerActivity.class));
+        linearLayout.findViewById(R.id.rl_me_my_radio).setOnClickListener(v -> jumpToActivity(MyRadioActivity.class));
+        linearLayout.findViewById(R.id.rl_me_my_collection).setOnClickListener(v -> jumpToActivity(MyCollectionActivity.class));
+    }
+
+    void jumpToActivity(Class<?> cls){
+        startActivity(new Intent(getContext(), cls));
+    }
 
     @Override
     protected int getLayoutId() {
@@ -44,20 +64,32 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
         mPresenter.getPlayList();
 
         initRecycler();
+        onClickEvent();
     }
 
     private void initRecycler() {
         View headView = getLayoutInflater().inflate(R.layout.item_me_rv_head, null);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        mAdapter = new MeRvAdapter(null);
+        generateTitle();
+        mAdapter = new MeRvAdapter(titleList);
         mAdapter.setHeaderView(headView);
         mMeRv.setLayoutManager(layoutManager);
         mMeRv.setAdapter(mAdapter);
     }
 
+    private void generateTitle(){
+        titleList = new ArrayList<>();
+        String[] playListTitle = getResources().getStringArray(R.array.playlist_title);
+        PlaylistTitleBean title1 = new PlaylistTitleBean();
+        title1.setTitle(playListTitle[0]);
+        PlaylistTitleBean title2 = new PlaylistTitleBean();
+        title2.setTitle(playListTitle[1]);
+        titleList.add(title1);
+        titleList.add(title2);
+    }
+
     @Override
     public void transportSongList(List<PlaylistBean> songList) {
-        Log.d(TAG, "transportSongList: "+songList.toString());
         String userName = mPresenter.loginUserName();
         divideList(userName, songList);
     }
@@ -77,21 +109,12 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     }
 
     private void combinedList(List<PlaylistBean> createdSongList, List<PlaylistBean> collectionSongList){
-        List<MultiItemEntity> expandList = new ArrayList<>();
-        String[] playListTitle = getResources().getStringArray(R.array.playlist_title);
-        PlaylistTitleBean title1 = new PlaylistTitleBean();
-        title1.setTitle(playListTitle[0]);
-        PlaylistTitleBean title2 = new PlaylistTitleBean();
-        title2.setTitle(playListTitle[1]);
         for (PlaylistBean bean : createdSongList) {
-            title1.addSubItem(bean);
+            ((PlaylistTitleBean)titleList.get(0)).addSubItem(bean);
         }
         for (PlaylistBean bean : collectionSongList) {
-            title2.addSubItem(bean);
+            ((PlaylistTitleBean)titleList.get(1)).addSubItem(bean);
         }
-        expandList.add(title1);
-        expandList.add(title2);
-        mAdapter.replaceData(expandList);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.replaceData(titleList);
     }
 }

@@ -39,15 +39,15 @@ public class MeRvAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity, Base
     protected void convert(@NonNull BaseViewHolder helper, MultiItemEntity item) {
         switch (helper.getItemViewType()){
             case TYPE_LEVEL_1:
-                int pos = helper.getAdapterPosition();
                 PlaylistTitleBean itemBean = (PlaylistTitleBean)item;
                 helper.setText(R.id.tv_playlist_title, itemBean.getTitle());
                 helper.setImageResource(R.id.iv_play_list_instruction_arrow, itemBean.isExpanded()? R.drawable.ic_down_arrow : R.drawable.ic_right_arrow);
                 helper.itemView.setOnClickListener(v -> {
+                    int pos = helper.getAdapterPosition();
                     if (itemBean.isExpanded()) {
-                        collapse(pos);
+                        collapse(pos, true, true);
                     }else {
-                        expand(pos);
+                        expand(pos,true, true);
                     }
                 });
                 break;

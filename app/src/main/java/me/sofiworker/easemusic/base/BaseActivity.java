@@ -13,7 +13,7 @@ import com.trello.rxlifecycle2.LifecycleProvider;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import me.sofiworker.easemusic.UiLoader;
+import me.sofiworker.easemusic.view.UiLoader;
 import me.sofiworker.easemusic.util.DialogUtil;
 import me.sofiworker.easemusic.util.ToastUtil;
 

@@ -17,8 +17,8 @@ public class IndicatorAdapter extends CommonNavigatorAdapter {
     private final String[] mTitles;
     private OnIndicatorTabListener mTabListener;
 
-    public IndicatorAdapter(Context context) {
-        mTitles = context.getResources().getStringArray(R.array.indicator_title);
+    public IndicatorAdapter(Context context, int title) {
+        mTitles = context.getResources().getStringArray(title);
     }
 
     @Override

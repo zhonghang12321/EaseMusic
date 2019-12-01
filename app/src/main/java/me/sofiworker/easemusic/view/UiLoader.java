@@ -1,4 +1,4 @@
-package me.sofiworker.easemusic;
+package me.sofiworker.easemusic.view;
 
 import android.content.Context;
 import android.os.Handler;
@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import me.sofiworker.easemusic.App;
+import me.sofiworker.easemusic.R;
 
 public abstract class UiLoader extends FrameLayout {
 

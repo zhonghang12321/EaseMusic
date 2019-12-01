@@ -26,4 +26,9 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
             mView.showNavProfile("", "");
         }
     }
+
+    @Override
+    public boolean isLogin() {
+        return mModel.getProfile() != null;
+    }
 }

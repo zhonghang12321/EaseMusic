@@ -6,6 +6,7 @@
     android:layout_marginTop="15dp">
 
     <RelativeLayout
+        android:id="@+id/rl_me_local_music"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -30,6 +31,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_me_recently_play"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -54,6 +56,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_me_download_manager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -78,6 +81,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_me_my_radio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -102,6 +106,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_me_my_collection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

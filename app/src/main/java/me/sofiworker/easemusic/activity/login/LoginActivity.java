@@ -1,5 +1,8 @@
 package me.sofiworker.easemusic.activity.login;
 
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -9,6 +12,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 import me.sofiworker.easemusic.R;
+import me.sofiworker.easemusic.activity.main.MainActivity;
 import me.sofiworker.easemusic.base.BaseActivity;
 import me.sofiworker.easemusic.util.StrUtil;
 
@@ -28,6 +32,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     EditText mPasswordEt;
     @BindView(R.id.btn_login)
     Button mLoginBtn;
+    public static final int LOGIN_RESULT = 1;
 
     @Override
     protected int getLayoutId() {
@@ -42,13 +47,23 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R.id.btn_login)
     void clickEvent(){
-        if (!StrUtil.isBlank(mUserNameEt.getText().toString()) && !StrUtil.isBlank(mPasswordEt.getText().toString())){
+        if (!TextUtils.isEmpty(mUserNameEt.getText().toString()) && !TextUtils.isEmpty(mPasswordEt.getText().toString())){
             Map<String, String> userInfo = new HashMap<>(16);
             userInfo.put("phone", mUserNameEt.getText().toString());
             userInfo.put("password", mPasswordEt.getText().toString());
             mPresenter.postLoginInfo(userInfo);
         }else {
             showToast("请输入正确的账号/密码");
+        }
+    }
+
+    @Override
+    public void isLoginSuccess(boolean isTrue) {
+        if (isTrue) {
+            Intent intent = new Intent();
+            intent.putExtra("isLoginSuccess", "LoginSuccess");
+            setResult(LOGIN_RESULT, intent);
+            finish();
         }
     }
 }

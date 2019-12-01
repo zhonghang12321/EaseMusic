@@ -18,6 +18,6 @@ public class FoundFragment extends BaseFragment<FoundPresenter> implements Found
 
     @Override
     protected void initEvent() {
-
+        showEmpty();
     }
 }
