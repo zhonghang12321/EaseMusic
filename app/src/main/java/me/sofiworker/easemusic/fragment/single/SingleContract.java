@@ -1,22 +1,24 @@
-package me.sofiworker.easemusic.activity.localmusic;
+package me.sofiworker.easemusic.fragment.single;
 
 import android.content.Context;
+import android.provider.MediaStore;
 
 import java.util.List;
 
 import me.sofiworker.easemusic.base.IBasePresenter;
 import me.sofiworker.easemusic.base.IBaseView;
+import me.sofiworker.easemusic.bean.LocalSongBean;
 
 /**
  * @author sofiworker
  * @version 1.0.0
- * @date 2019/12/1 15:58
- * @description 本地音乐契约接口
+ * @date 2019/12/1 22:03
+ * @description single的契约接口
  */
-public interface LocalMusicContract {
+class SingleContract {
 
-    interface View extends IBaseView{
-        void getMusicList(List<String> list);
+    interface View extends IBaseView {
+        void getMusicList(List<LocalSongBean> songList);
     }
 
     interface Presenter extends IBasePresenter<View> {
@@ -25,6 +27,6 @@ public interface LocalMusicContract {
     }
 
     interface Model {
-
+        List<?> scanLocalAudio();
     }
 }

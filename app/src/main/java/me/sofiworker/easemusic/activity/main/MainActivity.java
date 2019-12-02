@@ -1,6 +1,8 @@
 package me.sofiworker.easemusic.activity.main;
 
+import android.Manifest;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;
@@ -21,6 +23,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.sofiworker.easemusic.App;
 import me.sofiworker.easemusic.R;
 import me.sofiworker.easemusic.activity.login.LoginActivity;
 import me.sofiworker.easemusic.base.BaseActivity;
@@ -28,6 +31,9 @@ import me.sofiworker.easemusic.base.BaseFragment;
 import me.sofiworker.easemusic.fragment.found.FoundFragment;
 import me.sofiworker.easemusic.fragment.me.MeFragment;
 import me.sofiworker.easemusic.util.IndicatorUtil;
+import me.sofiworker.easemusic.util.ToastUtil;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * @author sofiworker
@@ -35,7 +41,7 @@ import me.sofiworker.easemusic.util.IndicatorUtil;
  * @date 2019/11/26 22:30
  * @description 主活动
  */
-public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
+public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View, EasyPermissions.PermissionCallbacks {
 
 
     private static final String TAG = "MainActivity";
@@ -58,6 +64,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @BindView(R.id.tv_main_sign)
     TextView mSignTv;
     public static final int LOGIN_REQUEST = 1;
+    private final int REQUEST_PERMISSION = 1;
 
     @Override
     protected int getLayoutId() {
@@ -75,6 +82,36 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
         IndicatorUtil.combineFv(this, getSupportFragmentManager(),
                 mIndicatorView, mMainVp, R.array.main_mi_title, fragmentList);
+
+        requestPermission();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @AfterPermissionGranted(REQUEST_PERMISSION)
+    void requestPermission() {
+        String[] per = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (!EasyPermissions.hasPermissions(App.getContext(), per)){
+            EasyPermissions.requestPermissions(this, getString(R.string.read_or_write_external_storage),
+                    REQUEST_PERMISSION, per);
+        }
+    }
+
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        if (requestCode == REQUEST_PERMISSION) {
+            ToastUtil.showShort("请给予应用足够的权限！");
+        }
     }
 
     @OnClick(R.id.iv_menu)

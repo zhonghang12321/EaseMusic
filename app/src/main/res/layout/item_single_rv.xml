@@ -7,8 +7,10 @@
     android:gravity="center_vertical">
 
     <TextView
+        android:id="@+id/tv_song_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLines="2"
         android:text="告白の夜"/>
 
     <LinearLayout
@@ -22,6 +24,7 @@
             android:text="HQ"
             android:textColor="@color/red"/>
         <TextView
+            android:id="@+id/tv_single_artist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ayasa绚沙"/>
@@ -30,6 +33,7 @@
             android:layout_height="wrap_content"
             android:text="-"/>
         <TextView
+            android:id="@+id/tv_single_album"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CHRONICLEV"/>

@@ -4,23 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
         <ImageView
+            android:id="@+id/iv_single_play"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_centerVertical="true"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_add"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="你好！！"/>
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/iv_single_play"
+            android:text="你好！！"
+            android:gravity="center"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
             android:text="多选"/>
-    </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
