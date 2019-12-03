@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
+import java.util.List;
+
 import me.sofiworker.easemusic.R;
 import me.sofiworker.easemusic.bean.LocalSongBean;
 

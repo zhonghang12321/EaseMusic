@@ -1,12 +1,9 @@
 package me.sofiworker.easemusic.fragment.me;
 
 
-import android.Manifest;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -16,20 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import me.sofiworker.easemusic.App;
 import me.sofiworker.easemusic.R;
 import me.sofiworker.easemusic.activity.downloadmanager.DownloadManagerActivity;
+import me.sofiworker.easemusic.activity.localmusic.LocalMusicActivity;
 import me.sofiworker.easemusic.activity.mycollection.MyCollectionActivity;
 import me.sofiworker.easemusic.activity.myradio.MyRadioActivity;
 import me.sofiworker.easemusic.activity.recentlyplay.RecentlyPlayActivity;
 import me.sofiworker.easemusic.adapter.MeRvAdapter;
 import me.sofiworker.easemusic.base.BaseFragment;
-import me.sofiworker.easemusic.bean.PlaylistTitleBean;
 import me.sofiworker.easemusic.bean.PlaylistBean;
-import me.sofiworker.easemusic.activity.localmusic.LocalMusicActivity;
-import me.sofiworker.easemusic.util.ToastUtil;
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
+import me.sofiworker.easemusic.bean.PlaylistTitleBean;
 
 /**
  * @author sofiworker
@@ -122,6 +115,6 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
         for (PlaylistBean bean : collectionSongList) {
             ((PlaylistTitleBean)titleList.get(1)).addSubItem(bean);
         }
-        mAdapter.replaceData(titleList);
+        mAdapter.setNewData(titleList);
     }
 }

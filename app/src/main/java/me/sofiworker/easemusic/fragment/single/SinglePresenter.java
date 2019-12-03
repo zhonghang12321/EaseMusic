@@ -3,6 +3,7 @@ package me.sofiworker.easemusic.fragment.single;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +11,15 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import me.sofiworker.easemusic.base.BasePresenter;
 import me.sofiworker.easemusic.bean.LocalSongBean;
 import me.sofiworker.easemusic.bean.SongListBean;
+import me.sofiworker.easemusic.util.ToastUtil;
 
 /**
  * @author sofiworker
@@ -63,7 +67,26 @@ public class SinglePresenter extends BasePresenter<SingleContract.View> implemen
                 }
                 cursor.close();
             }
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(songList::add).dispose();
-        mView.getMusicList(songList);
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<LocalSongBean>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+            }
+
+            @Override
+            public void onNext(LocalSongBean localSongBean) {
+                songList.add(localSongBean);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                ToastUtil.showShort("发生异常了："+e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                mView.getMusicList(songList);
+            }
+        });
     }
 }

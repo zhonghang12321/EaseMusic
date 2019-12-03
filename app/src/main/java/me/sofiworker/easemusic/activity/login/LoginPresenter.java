@@ -29,7 +29,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
     @Override
     public void postLoginInfo(Map<String, String> userInfo) {
         mView.showLoading(null);
-        RetrofitUtil.getApiService().userLogin(userInfo)
+        mApi.userLogin(userInfo)
                 .compose(RxUtil.transform(mProvider))
                 .subscribe(new BaseObserver<UserBean>() {
                     @Override

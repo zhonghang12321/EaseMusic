@@ -27,6 +27,11 @@
         <activity android:name=".activity.downloadmanager.DownloadManagerActivity"/>
         <activity android:name=".activity.myradio.MyRadioActivity"/>
         <activity android:name=".activity.mycollection.MyCollectionActivity"/>
+        <service android:name=".service.PlayService">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

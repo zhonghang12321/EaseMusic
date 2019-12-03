@@ -9,4 +9,6 @@ package me.sofiworker.easemusic;
 public class Constants {
 
     public static final String BASE_URL = "http://47.97.220.6:3000";
+
+    public static boolean LOGIN_STATUS = false;
 }

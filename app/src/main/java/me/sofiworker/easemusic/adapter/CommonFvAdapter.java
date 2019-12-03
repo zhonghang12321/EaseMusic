@@ -5,12 +5,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.SparseArray;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import me.sofiworker.easemusic.base.BaseFragment;
-import me.sofiworker.easemusic.fragment.found.FoundFragment;
-import me.sofiworker.easemusic.fragment.me.MeFragment;
 
 /**
  * @author sofiworker

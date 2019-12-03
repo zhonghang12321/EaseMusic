@@ -46,7 +46,7 @@ public class SingleFragment extends BaseFragment<SinglePresenter> implements Sin
     @Override
     protected void initEvent() {
         mPresenter = new SinglePresenter();
-        mPresenter.attachView(SingleFragment.this, mProvider);
+        mPresenter.attachView(this, mProvider);
 
         mPresenter.setContext(getContext());
 
@@ -68,17 +68,14 @@ public class SingleFragment extends BaseFragment<SinglePresenter> implements Sin
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                MediaPlayer mediaPlayer = new MediaPlayer();
-                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                try {
-                    mediaPlayer.setDataSource(mSongList.get(position).getUri());
-                    mediaPlayer.prepare();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                mediaPlayer.start();
+                LocalSongBean song = mSongList.get(position);
+                playSong(song);
             }
         });
+    }
+
+    private void playSong(LocalSongBean song){
+
     }
 
     @Override

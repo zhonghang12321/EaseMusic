@@ -17,7 +17,7 @@ import me.sofiworker.easemusic.util.RetrofitUtil;
 public abstract class BasePresenter<T extends IBaseView> implements IBasePresenter<T> {
 
     protected T mView;
-    protected Api mApi = RetrofitUtil.getApiService();
+    protected final Api mApi = RetrofitUtil.getInstance();
     protected LifecycleProvider<Lifecycle.Event> mProvider;
 
     @Override

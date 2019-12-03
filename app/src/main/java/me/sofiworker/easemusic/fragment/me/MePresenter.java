@@ -26,16 +26,8 @@ public class MePresenter extends BasePresenter<MeContract.View> implements MeCon
 
     @Override
     public void getPlayList() {
-//        SongListBean cacheList = mMeModel.getCacheList();
-//        if (cacheList != null && cacheList.getPlaylist() != null) {
-//            mView.transportSongList(cacheList.getPlaylist());
-//        }else {
-//
-//
-//        }
-
         if (mMeModel.getUserUid() != 0) {
-            RetrofitUtil.getApiService().getPlayList(mMeModel.getUserUid())
+            mApi.getPlayList(mMeModel.getUserUid())
                     .compose(RxUtil.transform(mProvider))
                     .subscribe(new BaseObserver<SongListBean>() {
                         @Override

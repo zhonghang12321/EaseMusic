@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 
 import me.sofiworker.easemusic.App;
+import me.sofiworker.easemusic.Constants;
 import me.sofiworker.easemusic.bean.UserBean;
 
 /**
@@ -20,6 +21,10 @@ class LoginModel {
     private static final String TAG = "LoginModel";
 
     void saveLoginUserInfo(UserBean user){
+        Constants.LOGIN_STATUS = true;
+//        SharedPreferences sp = App.getContext().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sp.edit();
+//        editor.putBoolean("isLogin", true).apply();
         spSave("accountBean", "account", user.getAccount());
         spSave("profileBean", "profile", user.getProfile());
         spSave("bindingBean", "bindings", user.getBindings());
