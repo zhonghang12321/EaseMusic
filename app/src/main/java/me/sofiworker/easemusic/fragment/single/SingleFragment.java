@@ -1,14 +1,32 @@
 package me.sofiworker.easemusic.fragment.single;
 
 import android.Manifest;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.RemoteException;
+import android.support.annotation.NonNull;
+import android.support.v4.media.MediaBrowserCompat;
+import android.support.v4.media.session.MediaControllerCompat;
+import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.UriUtil;
+import com.google.android.exoplayer2.util.Util;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,9 +34,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import me.sofiworker.easemusic.R;
+import me.sofiworker.easemusic.activity.play.PlayActivity;
 import me.sofiworker.easemusic.adapter.SingleRvAdapter;
 import me.sofiworker.easemusic.base.BaseFragment;
 import me.sofiworker.easemusic.bean.LocalSongBean;
+import me.sofiworker.easemusic.service.PlayService;
 import me.sofiworker.easemusic.util.ToastUtil;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -69,13 +89,11 @@ public class SingleFragment extends BaseFragment<SinglePresenter> implements Sin
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 LocalSongBean song = mSongList.get(position);
-                playSong(song);
+                Intent intent = new Intent(getContext(), PlayActivity.class);
+                intent.putExtra("SongUri", song.getUri());
+                startActivity(intent);
             }
         });
-    }
-
-    private void playSong(LocalSongBean song){
-
     }
 
     @Override

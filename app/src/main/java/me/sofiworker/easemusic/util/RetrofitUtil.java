@@ -21,7 +21,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitUtil {
 
-    private static final int TOME_OUT = 100; //超时时间
+    //超时时间
+    private static final int TOME_OUT = 100;
 
     private static Api mInstance = null;
 

@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
 import com.trello.rxlifecycle2.LifecycleProvider;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.sofiworker.easemusic.view.UiLoader;
